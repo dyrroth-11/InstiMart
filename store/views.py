@@ -21,61 +21,89 @@ def index(request):
     return render(request,'index.html' ,data)
 
 
+def validateCustomer(customer):
+    error = None
+    if (not customer.first_name):
+        error = "First Name Required !!"
+    elif len(customer.first_name) < 4:
+        error = 'First Name must be 4 char long or more'
+    elif not customer.last_name:
+        error = 'Last Name Required'
+    elif len(customer.last_name) < 4:
+        error = 'Last Name must be 4 char long or more'
+    elif not customer.phone:
+        error = 'Phone Number required'
+    elif len(customer.phone) < 10:
+        error = 'Phone Number must be 10 char Long'
+    elif len(customer.password) < 6:
+        error = 'Password must be 6 char long'
+    elif len(customer.email) < 5:
+        error = 'Email must be 5 char long'
+    elif customer.isExist():
+        error = 'Email Address Already Registered'
+    return error
+
+def registerUser(request):
+    pp = request.POST
+    first_name = pp.get('firstname')
+    last_name = pp.get('lastname')
+    phone = pp.get('phone')
+    email = pp.get('email')
+    password = pp.get('password')
+    value = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'phone': phone,
+        'email': email
+    }
+    customer = Customer(
+        first_name=first_name,
+        last_name=last_name,
+        phone=phone,
+        email=email,
+        password=password,
+    )
+    error = validateCustomer(customer)
+
+    if not error:
+        customer.password = make_password(customer.password)
+        customer.register()
+        return redirect('homepage')
+
+    else:
+        data = {
+            'error': error,
+            'values': value
+        }
+        return render(request, 'signup.html', data)
+
 def signup(request):
     if request.method == 'GET':
         return render(request, 'signup.html')
     else:
-        pp = request.POST
-        first_name = pp.get('firstname')
-        last_name = pp.get('lastname')
-        phone = pp.get('phone')
-        email = pp.get('email')
-        password = pp.get('password')
-        #validation
-        value = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'phone': phone,
-            'email': email
-        }
-        customer = Customer(
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            email=email,
-            password=password,
-        )
-        error = None;
-        if (not first_name):
-            error = "First Name Required !!"
-        elif len(first_name) < 4:
-            error = 'First Name must be 4 char long or more'
-        elif not last_name:
-            error = 'Last Name Required'
-        elif len(last_name) < 4:
-            error = 'Last Name must be 4 char long or more'
-        elif not phone:
-            error = 'Phone Number required'
-        elif len(phone) < 10:
-            error = 'Phone Number must be 10 char Long'
-        elif len(password) < 6:
-            error = 'Password must be 6 char long'
-        elif len(email) < 5:
-            error = 'Email must be 5 char long'
-        elif customer.isExist():
-            error = 'Email Address Already Registered'
+        return  registerUser(request)
 
-
-        #saving
-        if not error:
-            customer.password=make_password(customer.password)
-            customer.register()
-            return redirect('homepage')
-
+def login(request):
+    if request.method == 'GET':
+        return render(request,'login.html')
+    else:
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        customer = Customer.get_customer_by_email(email)
+        error = None
+        if customer:
+           ok= check_password(password, customer.password)
+           if ok:
+               return redirect('homepage')
+           else:
+               error = 'Password invalid !'
         else:
-            data = {
-                'error':error,
-                'values':value
-            }
-            return render(request , 'signup.html', data)
+            error = 'Email or Password invalid !'
+        return render(request,'login.html',{'error':error})
+
+
+
+
+
+
 
