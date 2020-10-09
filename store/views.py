@@ -13,6 +13,11 @@ def index(request):
         products = Product.get_all_products_by_categoryid(categoryID)
     else:
         products = Product.get_all_products()
+
     data['products'] = products
     data['categories'] = categories
     return render(request,'index.html' ,data)
+
+
+def signup(request):
+    return render(request,'signup.html')
