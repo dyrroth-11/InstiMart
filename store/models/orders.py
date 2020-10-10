@@ -13,3 +13,5 @@ class Orders(models.Model):
     date = models.DateField(default=datetime.datetime.today)
 
 
+    def placeOrder(self):
+        self.save()
