@@ -10,3 +10,12 @@ def is_in_cart(product, cart):
         if int(key) == product.id:
             return True
     return False
+
+
+@register.filter(name='cart_quantity')
+def cart_quantity(product, cart):
+    keys = cart.keys()
+    for key in keys:
+        if int(key) == product.id:
+            return cart.get(key)
+    return 0
