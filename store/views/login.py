@@ -23,3 +23,7 @@ class Login(View):
         else:
             error = 'Email or Password invalid !'
         return render(request, 'login.html', {'error': error})
+
+def logout(request):
+    request.session.clear()
+    return redirect('login')
