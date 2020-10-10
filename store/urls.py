@@ -9,5 +9,6 @@ urlpatterns = [
     path('login', login.Login.as_view(), name='login'),
     path('logout', login.logout, name='logout'),
     path('cart',cart.Cart.as_view(),name='cart')
+    path('check-out',)
 
 ]

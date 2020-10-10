@@ -2,6 +2,7 @@
 {% block content %}
 
 {% load cart %}
+{% load custom_filter %}
 
 
 <!-- body  -->
@@ -9,29 +10,18 @@
 
 <div class="container-fluid mt-3">
     <div class="row">
-        <!-- filters -->
-        <div class="col-lg-3 mx-auto">
-            <div class="list-group">
-                <a href="/" class="list-group-item 
-                list-group-item-action ">All Products</a>
-
-                {% for category in categories %}
-                <a href="/?category={{category.id}}" class="list-group-item 
-                list-group-item-action ">{{category.name}}</a>
-                {% endfor %}
-            </div>
-        </div>
+      
 
         <!-- products -->
         <div id="products" class='col-lg-9'>
             <div class="row mx-auto ">
                 {% for product in products %}
                 <div class="card mx-auto  mb-2 mt-2 " id={{product.id}} style="width: 22rem;">
-                    <img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
+                    <img style="height:300px" class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{product.name}}</h5>
                         <p class="card-text">{{product.description}}</p>
-                        <p class="card-text"><b>{{product.price}}</b></p>
+                        <p class="card-text"><b>{{product.price|currency}}</b></p>
 
 
                     </div>
@@ -68,6 +58,18 @@
 
                 {% endfor %}
 
+            </div>
+        </div>
+          <!-- filters -->
+          <div class="col-lg-3 mx-auto">
+            <div class="list-group">
+                <a href="/" class="list-group-item 
+                list-group-item-action ">All Products</a>
+
+                {% for category in categories %}
+                <a href="/?category={{category.id}}" class="list-group-item 
+                list-group-item-action ">{{category.name}}</a>
+                {% endfor %}
             </div>
         </div>
     </div>
