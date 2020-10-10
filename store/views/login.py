@@ -16,6 +16,8 @@ class Login(View):
         if customer:
             ok = check_password(password, customer.password)
             if ok:
+                request.session['customer_id']=customer.id
+                request.session['customer_email'] = customer.email
                 return redirect('homepage')
             else:
                 error = 'Password invalid !'
