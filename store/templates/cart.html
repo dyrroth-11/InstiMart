@@ -21,7 +21,7 @@
             <tbody>
                 {% for product in products %}
                 <tr>
-                    <td>{{forloop.counter0}}</td>
+                    <td>{{forloop.counter}}</td>
                     <td><img style="width:60px" class="border" src="{{product.image.url}}" alt=""></td>
                     <td>{{product.name}}</td>
                     <td>{{product.price|currency}}</td>

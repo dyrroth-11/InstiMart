@@ -9,7 +9,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-      <style></style>
+      <style>
+        /* custom theme + Bootstrap resets */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+.bg-purple { 
+   background-color:var(--purple);
+}
+.text-purple,.text-purple:hover { 
+   color:var(--purple);
+}    
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+      </style>
     <title>InstiMart</title>
 </head>
 <body>
@@ -31,6 +46,9 @@
         </li>
 
         {% if request.session.customer %}
+        <li class="nav-item ">
+          <a class="nav-link" href="/sell">Sell<span class="sr-only">(current)</span></a>
+        </li>
         <li class="nav-item ">
           <a class="nav-link" href="/orders">My Orders<span class="sr-only">(current)</span></a>
         </li>

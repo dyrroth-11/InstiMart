@@ -10,7 +10,19 @@
 
 <div class="container-fluid mt-3">
     <div class="row">
-      
+        
+         <!-- filters -->
+         <div class="col-lg-3 mx-auto">
+            <div class="list-group">
+                <a href="/" class="list-group-item 
+                list-group-item-action ">All Products</a>
+
+                {% for category in categories %}
+                <a href="/?category={{category.id}}" class="list-group-item 
+                list-group-item-action ">{{category.name}}</a>
+                {% endfor %}
+            </div>
+        </div>
 
         <!-- products -->
         <div id="products" class='col-lg-9'>
@@ -60,18 +72,7 @@
 
             </div>
         </div>
-          <!-- filters -->
-          <div class="col-lg-3 mx-auto">
-            <div class="list-group">
-                <a href="/" class="list-group-item 
-                list-group-item-action ">All Products</a>
-
-                {% for category in categories %}
-                <a href="/?category={{category.id}}" class="list-group-item 
-                list-group-item-action ">{{category.name}}</a>
-                {% endfor %}
-            </div>
-        </div>
+         
     </div>
 </div>
 
