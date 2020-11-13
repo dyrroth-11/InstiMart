@@ -44,17 +44,11 @@ class Sell(View):
         print(gp)
         print(image)
         error = self.validateProduct(product)
-
-        if not error:
-            product.register()
-            return redirect('homepage')
-
-        else:
-            data = {
-                'error': error,
-                'values': value
-            }
-            return render(request, 'sell.html', data)
+        data = {
+            'error': error,
+            'values': value
+        }
+        return render(request, 'thanks.html', data)
 
     def validateProduct(self, customer):
         error = None

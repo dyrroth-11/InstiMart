@@ -5,66 +5,9 @@
     <div class="p-4 m-4">
         <div class ="col-lg-8 mx-auto border rounded p-3">
             <p class="text-center display-4">
-              Post An Advertisement
+              Thanks for posting the ad we will contact you soon for the verification...
           </p>
-            <form action="/sell" method="POST">
-                {% csrf_token %}
-                {% if error %}
-                <div class="alert alert-danger" role="alert">
-                    {{error}}
-                </div>
-                {% endif %}
-
-             <!-- for productname -->
-          <div class="form-group">
-            <label for="">Product Name</label>
-            <input type="text" value="" name="productname" id="" class="form-control form-control-sm" placeholder="" >
-          </div>
-
-            <!-- for Expected Proce-->
-          <div class="form-group">
-            <label for="">Expected Price</label>
-            <input type="text" value="" name="price" id="" class="form-control form-control-sm" placeholder="" >
-          </div>
-           <!-- for Category-->
-           <div class="form-group">
-            <label for="">Category</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" type="button">Category</button>
-              </div>
-              <select class="custom-select" id="inputGroupSelect03">
-                <option selected>Choose...</option>
-                <option value="1">ED-KIT</option>
-                <option value="2">Books</option>
-                <option value="3">Furniture</option>
-                <option value="4">Electronics</option>
-                <option value="5">Lab-coat and Apron</option>
-                <option value="6">Cycle and Scooty</option>
-                <option value="7">Miscellaneous</option>
-              </select>
-            </div>
-          </div>
-
-            
-           <!-- for description-->
-           <div class="form-group">
-            <label for="">Description</label>
-            <textarea class="form-control form-control-sm" id="" name="des" rows="4"></textarea>
-          </div>
-
-           <!-- for image-->
-           <div class="custom-file form-group">
-            <input type="file" name="image" class="custom-file-input" id="image">
-            <label class="custom-file-label" for="image">Choose An Image</label>
-          </div>
            
-           <div class="form-group mt-2 mx-auto">
-               <input class="btn btn-md btn-info mx-auto " type="submit" value="Post" >
-           </div>
-
-
-            </form>
         </div>
 
     </div>
