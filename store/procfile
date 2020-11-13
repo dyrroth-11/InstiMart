@@ -1,0 +1,1 @@
+web: gunicorn InstiMart.wsgi --log-file -
