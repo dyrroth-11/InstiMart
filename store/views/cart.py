@@ -11,8 +11,7 @@ class Cart(View):
         print(ids)
         if not x:
             print("a")
-            products
-            return render(request, 'cart.html',)
+            return render(request, 'nocart.html')
         else:
             print("b")
             products = Product.get_product_by_id(ids)
