@@ -9,7 +9,7 @@ class Signup(View):
         return render(request, 'signup.html')
 
     def post(self, request):
-        return registerUser(request)
+        return Signup.registerUser(self, request)
 
     def registerUser(self, request):
         pp = request.POST

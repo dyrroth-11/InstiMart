@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from store.models.customer import Customer
-from django.contrib.auth.hashers import make_password
+from store.models.category import Category
+from store.models.product import Product
 from django.views import View
 
 
@@ -9,33 +10,43 @@ class Sell(View):
         return render(request, 'sell.html')
 
     def post(self, request):
-        return registerUser(request)
+        print('kya ho gya ye')
+        return Sell.addProduct(self, request)
 
-    def registerUser(self, request):
+    def addProduct(self, request):
         pp = request.POST
-        first_name = pp.get('firstname')
-        last_name = pp.get('lastname')
-        phone = pp.get('phone')
-        email = pp.get('email')
-        password = pp.get('password')
-        value = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'phone': phone,
-            'email': email
-        }
-        customer = Customer(
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            email=email,
-            password=password,
+        print(request)
+        product_name = pp.get('productname')
+        price = pp.get('price')
+        des = pp.get('des')
+        image = pp.get('image')
+        gp = Category(
+            name="Furniture",
         )
-        error = self.validateCustomer(customer)
+        gp.save();
+        value = {
+            'name': product_name,
+            'price': price,
+            'category': gp,
+            'description': des,
+            'image': image
+        }
+        product = Product(
+            name=product_name,
+            price=price,
+            category=gp,
+            description=des,
+            image=request.FILES.get('image'),
+        )
+        print(product_name)
+        print(price)
+        print(des)
+        print(gp)
+        print(image)
+        error = self.validateProduct(product)
 
         if not error:
-            customer.password = make_password(customer.password)
-            customer.register()
+            product.register()
             return redirect('homepage')
 
         else:
@@ -43,26 +54,19 @@ class Sell(View):
                 'error': error,
                 'values': value
             }
-            return render(request, 'signup.html', data)
+            return render(request, 'sell.html', data)
 
-    def validateCustomer(self, customer):
+    def validateProduct(self, customer):
         error = None
-        if (not customer.first_name):
-            error = "First Name Required !!"
-        elif len(customer.first_name) < 4:
-            error = 'First Name must be 4 char long or more'
-        elif not customer.last_name:
-            error = 'Last Name Required'
-        elif len(customer.last_name) < 4:
-            error = 'Last Name must be 4 char long or more'
-        elif not customer.phone:
-            error = 'Phone Number required'
-        elif len(customer.phone) < 10:
-            error = 'Phone Number must be 10 char Long'
-        elif len(customer.password) < 6:
-            error = 'Password must be 6 char long'
-        elif len(customer.email) < 5:
-            error = 'Email must be 5 char long'
-        elif customer.isExist():
-            error = 'Email Address Already Registered'
+        if (not customer.name):
+            error = "Product Name Required !!"
+        elif not customer.price:
+            error = 'Price Required'
+        elif not customer.description:
+            error = 'Description required'
+        elif not customer.image:
+            error = 'Image required'
+        elif not customer.category:
+            error = 'category required'
+
         return error
