@@ -30,12 +30,14 @@ class Index(View):
 
     def get(self, request):
         cart = request.session.get('cart')
+        print(request.session.get('cart') , "sjhdflaksdjhflkajhfdslkjahflsdkjhflkajdsh")
         if not cart:
             request.session.cart={}
         products = None
         categories = Category.get_all_categories()
         data = {}
-        categoryID = request.GET.get('category')
+        categoryID = request.GET.get('category') # ['category']
+        print(categoryID , "cat id")
         if categoryID:
             products = Product.get_all_products_by_categoryid(categoryID)
         else:
@@ -44,5 +46,8 @@ class Index(View):
         data['products'] = products
         data['categories'] = categories
         return render(request, 'index.html', data)
+
+
+
 
 
